@@ -1,0 +1,65 @@
+
+html {
+    /* 350 100px */
+    font-size: 26.666666667vw;
+    /* 350 50px */
+    /*font-size: 13.333333334vw;*/
+    /* 750 100px*/
+    /*font-size: 13.333333334vw;*/
+}
+
+body {
+    font-size: 14px;
+}
+
+body, ul, ol, p, h1, h2, h3, h4, h5, h6, dl, dt, dd {
+    margin: 0;
+    padding: 0;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+input[type=text],
+input[type=password] {
+    border: 1px solid #b0b0b0;
+}
+
+:focus {
+    outline: none;
+}
+
+textarea {
+    resize: none;
+    border: 1px solid #b0b0b0;
+}
+
+.clearfix::after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.text-center {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #333;
+}
+
+table tr th,
+table tr td {
+    border: 1px solid #333;
+}
+
+img {
+    vertical-align: middle;
+}
+
