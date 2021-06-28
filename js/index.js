@@ -134,5 +134,119 @@ $(window).on('click',function (e){
   $('.left .nav').removeClass('show')
 })
 
-// 轮播图
 
+// 轮播图
+$.get('https://gank.io/api/v2/banners', function (res) {
+  $('.banner').myBanner({
+    data: res.data,
+    index: 0,
+  })
+})
+// $.fn.myBanner = (options) => {
+$.fn.myBanner = function (options){
+  const ele = this
+  let activeIndex = options.index || 0
+  options.data.forEach((item, index) => {
+    $(`<a href="${item.url}"
+            style="display: ${index === activeIndex ? 'block' : 'none'}" class="item">
+        <img src="${item.image}" alt="">
+      </a>
+      <div style="display: ${index === activeIndex ? 'block' : 'none'}" class="dexx">${item.title}</div>
+    <div style="display: ${index === activeIndex ? 'block' : 'none'}" class="left-arr"></div>
+    <div style="display: ${index === activeIndex ? 'block' : 'none'}" class="right-arr"></div>
+`).appendTo('.banner')
+  })
+  const images = ele.find('.item')
+  const dexx = ele.find('.dexx')
+  const leftArr = ele.find('.left-arr')
+  const rightArr = ele.find('.right-arr')
+  function banners() {
+    activeIndex += 1
+    if (activeIndex >= images.length) {
+      activeIndex = 0
+    }
+    images.eq(activeIndex).fadeIn(500)
+    .siblings().fadeOut(500)
+    dexx.eq(activeIndex).show()
+    leftArr.eq(activeIndex).show()
+    rightArr.eq(activeIndex).show()
+  }
+  let timer = setInterval(function () {
+    banners()
+  }, 5000)
+
+  rightArr.on('click',function () {
+    banners()
+  })
+  leftArr.on('click',function () {
+    activeIndex -= 1
+    if (activeIndex < 0) {
+      activeIndex = images.length
+    }
+    images.eq(activeIndex).fadeIn(500)
+    .siblings().fadeOut(500)
+    dexx.eq(activeIndex).show()
+    leftArr.eq(activeIndex).show()
+    rightArr.eq(activeIndex).show()
+  })
+
+  ele.hover(function () {
+    clearInterval(timer)
+  }, function () {
+    timer = setInterval(function () {
+      banners()
+    }, 5000)
+  })
+}
+
+
+
+
+
+// 切换主题
+// color: #ffffff;  background-color: #151617;  header background-color: #1D1F20;
+const night = document.querySelector(':root')
+const logo = $('.left .logo')
+
+console.log()
+
+function Night() {
+  $(logo).addClass('night')
+  night.style.cssText = `
+  --bg-color: #151617;
+  --header-bg:#1D1F20;
+  --color:#ffffff;
+  color:#fff;
+  `
+  $('.tit').html('一点就亮')
+}
+function sun() {
+  $(logo).removeClass('night')
+  night.style.cssText = `
+      --bg-color: #f5f5f7; 
+      --header-bg:#fff;
+      --color:#222831;
+  `
+  $('.tit').html('一点乌漆嘛黑')
+}
+if (localStorage.getItem('isnight') === 'true'){
+  Night()
+}else {
+  sun()
+}
+
+
+$('.yueliang').on('click',function () {
+  if (!$(logo).hasClass('night')){
+    Night()
+    localStorage.setItem('isnight','true')
+  }else {
+    sun()
+    localStorage.setItem('isnight','false')
+  }
+})
+$('.yueliang').hover(function () {
+  $('.tit').css('display','block')
+},function () {
+  $('.tit').css('display','none')
+})
